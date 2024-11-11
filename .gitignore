@@ -1,0 +1,34 @@
+# Maven build directories
+target/             # Compiled files and build artifacts
+!.mvn/              # Keep the .mvn folder (contains wrapper scripts if using Maven Wrapper)
+
+# IDE-specific files (Eclipse)
+.idea/              # IntelliJ IDEA project files
+*.iml               # IntelliJ IDEA module files
+
+# Eclipse project files
+*.project
+*.classpath
+.settings/
+
+# OS-specific files
+.DS_Store           # macOS file
+Thumbs.db           # Windows file
+
+# Logs
+*.log               # Log files
+
+# TestNG temporary or output files
+test-output/        # TestNG output directory
+*.testreport        # TestNG test reports
+
+# Dependency directories (if your project has any local dependency cache)
+*.jar               # Local jar dependencies if not using Maven for dependency management
+
+# IntelliJ IDEA project-specific folders
+.idea/
+*.iml
+
+# Other temporary files or folders
+*.swp               # Vim temporary files
+*.bak               # Backup files

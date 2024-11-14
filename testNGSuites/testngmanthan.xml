@@ -6,7 +6,7 @@
 </listeners>
   <test  name="End to end Framework Test">
     <classes>
-      <class name="org.courierdost.firstTest.java"/>     
+      <class name="org.courierdost.android.androidFirstTest.java"/>     
     </classes>
     </test>
 

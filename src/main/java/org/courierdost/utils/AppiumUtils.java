@@ -6,9 +6,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -67,10 +69,16 @@ public abstract class AppiumUtils {
 	}
 	
 	
-	public void waitForElementToAppear(WebElement ele, AppiumDriver driver)
+	public void waitForElementToAppear(WebElement ele, AppiumDriver driver,int timeInSeconds)
 	{
-		WebDriverWait wait =new WebDriverWait(driver,Duration.ofSeconds(5));
-		wait.until(ExpectedConditions.attributeContains((ele),"text" , "Cart"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
+	    wait.until(ExpectedConditions.visibilityOf(ele));
+	}
+	
+	public void waitForElementToBeClickable(WebElement ele, AppiumDriver driver,int timeInSeconds)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
+	    wait.until(ExpectedConditions.elementToBeClickable(ele));
 	}
 	
 	
@@ -82,9 +90,42 @@ public abstract class AppiumUtils {
 		return destinationFile;
 		//1. capture and place in folder //2. extent report pick file and attach to report
 		
-		
-		
 	}
 	
+	public String generateMobileNumber() {
+		
+		String mobileNumber;
+		
+		Random random = new Random();
+		
+		int firstDigit = random.nextInt(9) + 1;
+		long remainingDigits = (long) (random.nextDouble() * 1_000_000_000);
+		mobileNumber = firstDigit + String.format("%09d", remainingDigits);
+		return mobileNumber;
+	}
+	
+	public String UniqueGSTNumber() {
+		
+		Random random = new Random();
+        int fourDigitNumber = random.nextInt(9000) + 1000;
+		
+		return "36AABCU"+fourDigitNumber+"J1ZQ";
+	}
+	
+	public StringBuilder generateName() {
+		Random random = new Random();
+        StringBuilder name = new StringBuilder();
+
+        // Generate 5 random alphabetic characters
+        for (int i = 0; i < 10; i++) {
+            // Randomly choose between uppercase (A-Z) and lowercase (a-z)
+            char randomChar = (char) (random.nextBoolean() 
+                ? random.nextInt(26) + 'A'  // Uppercase
+                : random.nextInt(26) + 'a'  // Lowercase
+            );
+            name.append(randomChar);
+        }
+        return name;
+	}
 	
 }

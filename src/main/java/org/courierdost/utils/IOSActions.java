@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import com.google.common.collect.ImmutableMap;
 
 import io.appium.java_client.AppiumBy;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 
@@ -64,7 +65,16 @@ public class IOSActions extends AppiumUtils{
 		//params1.put("element", ((RemoteWebElement)ele).getId());
 		driver.executeScript("mobile:swipe", params1);
 		
-		
+	}
+	
+	public void scrollToEndAction(AppiumDriver driver) {
+	    try {
+	        ((JavascriptExecutor) driver).executeScript("mobile: scroll", ImmutableMap.of(
+	            "direction", "down"
+	        ));
+	    } catch (Exception e) {
+	        System.out.println("Scrolling to end failed: " + e.getMessage());
+	    }
 	}
 
 }

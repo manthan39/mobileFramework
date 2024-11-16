@@ -1,12 +1,15 @@
 package org.courierdost.TestUtils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Properties;
 
 import org.courierdost.utils.AppiumUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
@@ -16,6 +19,15 @@ public class IOSBaseTest extends AppiumUtils {
 
 	public IOSDriver driver;
 	public AppiumDriverLocalService service;
+	public Properties prop;
+
+    @BeforeSuite(alwaysRun = true)
+	public void setUpProperty() throws IOException {
+    	prop = new Properties();
+		FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"//src//main//java//org//courierdost//testData//testdata.properties");
+		prop.load(fis);
+        fis.close();
+    }
 
 	@BeforeClass(alwaysRun = true)
 	public void ConfigureAppium() throws IOException {
@@ -31,9 +43,11 @@ public class IOSBaseTest extends AppiumUtils {
 		// Appium- Webdriver Agent -> IOS Apps.
 		options.setWdaLaunchTimeout(Duration.ofSeconds(20));
 		options.setCapability("autoAcceptAlerts", true);
+		options.setCapability("permissions", "{\"com.itdcd.vendor\": {\"photos\": \"yes\"}}");
+
 
 		driver = new IOSDriver(new URL("http://127.0.0.1:4723"), options);
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
 
 	}
 

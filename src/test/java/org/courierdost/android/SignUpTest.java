@@ -9,6 +9,18 @@ import org.testng.annotations.Test;
 public class SignUpTest extends AndroidBaseTest  {
 	SignUpPage LP;
 	
+	@BeforeTest(alwaysRun = true)
+	public void setUpProperty() throws IOException {
+		prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "//src//main//java//org//courierdost//testData//testdata.properties");
+		prop.load(fis);
+		fis.close();
+
+		
+	}
+
+	
 	@Test
 	public void loginAsVendor() throws InterruptedException, IOException {
 		LP = new SignUpPage(driver);

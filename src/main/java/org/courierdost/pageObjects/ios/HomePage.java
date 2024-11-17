@@ -3,6 +3,7 @@ package org.courierdost.pageObjects.ios;
 import org.courierdost.utils.IOSActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;
@@ -16,7 +17,6 @@ public class HomePage extends IOSActions{
 		this.driver = driver;
 	}
 	
-	
 	public FlutterFinder finder = new FlutterFinder(this.driver);
 
 	public WebElement newOrderText() {
@@ -27,14 +27,65 @@ public class HomePage extends IOSActions{
 		return driver.findElement(By.xpath("//XCUIElementTypeImage[@name=\" Domestic\n"
 				+ "Tab 1 of 2\"]"));
 	}
+	
+	public WebElement internationalTab() {
+		return driver.findElement(By.xpath("//XCUIElementTypeImage[@name=\" International\n"
+				+ "Tab 2 of 2\"]"));
+	}
+	
+	
 
+	public WebElement noPickUpRequestHeader() {
+		return driver.findElement(AppiumBy.accessibilityId("No pickup requests available"));
+	}
+	
+	public WebElement activeOrderHeader() {
+		return driver.findElement(AppiumBy.accessibilityId("Active orders"));
+	}
+	
+	public WebElement activeOrderShowAllLink() {
+		return driver.findElement(AppiumBy.accessibilityId("Show all"));
+	}
+	
+	public WebElement firstActiveOrderOnHomePage() {
+		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeImage[contains(@name, 'Order ID')]"));
+	}
+	
+	
+	public WebElement pendingOrderClick() {
+		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeStaticText[contains(@name, 'Pending orders')]"));
+	}
+	
+	public WebElement pastOrderlClick() {
+		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeStaticText[contains(@name, 'Past orders')]"));
+	}
 	
 	// ===========Locators end================================================//
 	
 	public void verifyHomePageElements() {
-		waitForElementToAppear(newOrderText(), driver,15);
-		newOrderText().isDisplayed();
-		domesticTab().isDisplayed();
-		
+		waitForElementToAppear(domesticTab(), driver,15);
+		Assert.assertTrue(domesticTab().isDisplayed());
+	    Assert.assertTrue(internationalTab().isDisplayed());
+	    internationalTab().click();
+	    domesticTab().click();
+	    waitForElementToAppear(newOrderText(), driver,20);
+	    Assert.assertTrue(newOrderText().isDisplayed());	
+	    Assert.assertTrue(noPickUpRequestHeader().isDisplayed());
+	    Assert.assertTrue(activeOrderHeader().isDisplayed());
+	    Assert.assertTrue(firstActiveOrderOnHomePage().isDisplayed());
+	    scrollToEndAction(driver);
+	    Assert.assertTrue(pendingOrderClick().isDisplayed());
+	    Assert.assertTrue(pastOrderlClick().isDisplayed());
+	    Assert.assertTrue(firstActiveOrderOnHomePage().isDisplayed());
+	}
+	
+	public void showAllactiveOrderList() {
+		waitForElementToAppear(activeOrderShowAllLink(), driver,15);
+		activeOrderShowAllLink().click();
+	}
+	
+	public void clickOnActiveOrder() {
+		waitForElementToBeClickable(firstActiveOrderOnHomePage(), driver, 10);
+		firstActiveOrderOnHomePage().click();
 	}
 }

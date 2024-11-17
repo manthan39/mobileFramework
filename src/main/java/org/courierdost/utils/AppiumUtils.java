@@ -80,6 +80,14 @@ public abstract class AppiumUtils {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
 	    wait.until(ExpectedConditions.elementToBeClickable(ele));
 	}
+	 public void waitUntilElementIsClicked(WebElement element, int timeoutInSeconds,AppiumDriver driver) {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+	        try {
+	            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+	        } catch (Exception e) {
+	            System.out.println("Element was not clickable within the specified time: " + e.getMessage());
+	        }
+	    }
 	
 	
 	public String getScreenshotPath(String testCaseName, AppiumDriver driver) throws IOException

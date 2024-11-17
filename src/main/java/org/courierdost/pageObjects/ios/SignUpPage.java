@@ -129,7 +129,9 @@ public class SignUpPage extends IOSActions {
 	
 	
 	
-	public void clickNextButton() {
+	public void clickNextButtonForOnboardingScreen() {
+		getNextButton().click();
+		getNextButton().click();
 		getNextButton().click();
 	}
 
@@ -243,6 +245,7 @@ public class SignUpPage extends IOSActions {
 	}
 	
 	public void searchAreaAndSaveAddress() {
+		waitForElementToBeClickable(searchBar(),driver,20);
 		searchBar().click();
 		searchBar().sendKeys("Ahmedabad");
 		waitForElementToAppear(seelctFirstSuggestions(), driver,15);

@@ -10,7 +10,17 @@ public class ActiveOrdersTest extends AndroidBaseTest  {
 	ActiveOrdersPage activeOrdersObj;
 	HomePage homePageObj;
 
-	
+	@BeforeTest(alwaysRun = true)
+	public void setUpProperty() throws IOException {
+		prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "//src//main//java//org//courierdost//testData//testdata.properties");
+		prop.load(fis);
+		fis.close();
+
+		
+	}
+
 	@Test
 	public void homepageAsVendor() throws InterruptedException {
 		

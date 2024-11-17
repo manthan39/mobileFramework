@@ -11,27 +11,31 @@ import org.courierdost.pageObjects.ios.SignUpPage;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class LoginTest extends IOSBaseTest{
+public class HomePageTest extends IOSBaseTest {
 	SignUpPage signUpObj;
 	LoginPage loginPageObj;
 	HomePage homePageObj;
-	
+
 	@BeforeTest(alwaysRun = true)
 	public void setUpProperty() throws IOException {
-    	prop = new Properties();
-		FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"//src//main//java//org//courierdost//testData//testdata.properties");
+		prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "//src//main//java//org//courierdost//testData//testdata.properties");
 		prop.load(fis);
-        fis.close();
-    }
-	
+		fis.close();
+
+		
+	}
+
 	@Test
-	public void loginAsVendor() {
-	
+	public void homePageVerification() {
+
 		signUpObj = new SignUpPage(driver);
 		signUpObj.clickNextButtonForOnboardingScreen();
 		
+
 		loginPageObj = new LoginPage(driver);
-		
+
 		loginPageObj.clickingOnAlredyRegisteredButton();
 		loginPageObj.inputMobileNumber(prop.getProperty("Mobile1"));
 		loginPageObj.clickingOnVerifyButton();
@@ -40,6 +44,7 @@ public class LoginTest extends IOSBaseTest{
 		
 		homePageObj = new HomePage(driver);
 		homePageObj.verifyHomePageElements();
-		
+		homePageObj.showAllactiveOrderList();
+
 	}
 }

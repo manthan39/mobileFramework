@@ -177,6 +177,7 @@ public class SignUpPage extends AndroidActions{
 	}
 	//----------------------------------------------Locators above -----------------------//
 	public void clickNextButton() {
+		waitForElementToAppear(getNextButton(),driver,200);
 		getNextButton().click();
 	}
 	
@@ -193,7 +194,6 @@ public class SignUpPage extends AndroidActions{
 	}
 	public void fillOTP(String OTP) {
 		addOTP(OTP);
-		
 		verifyOTPNumber().click();
 		
 	}
@@ -203,6 +203,7 @@ public class SignUpPage extends AndroidActions{
 		addfirstPin().sendKeys(pin);
 	}
 	public void addReEnterpin(String pin) {
+		waitUntilElementIsClicked(reEnterPin(),200,driver);
 		reEnterPin().click();
 		reEnterPin().sendKeys(pin);
 	}
@@ -228,13 +229,13 @@ public class SignUpPage extends AndroidActions{
 	}
 	
 	
-	public void addAdditionalDetailsName(String name) {
+	public void addAdditionalDetailsName(StringBuilder stringBuilder) {
 		yourName().click();
-		yourName().sendKeys(name);
+		yourName().sendKeys(stringBuilder);
 	}
-public void addAdditionalDetailsWeblink(String weblink) {
+public void addAdditionalDetailsWeblink(StringBuilder stringBuilder) {
 	website().click();
-		website().sendKeys(weblink);
+		website().sendKeys(stringBuilder);
 	}
 public void addAdditionalDetailsPhone(String phno) {
 	alternatePhone().click();

@@ -3,6 +3,7 @@ package org.courierdost.TestUtils;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Properties;
 
 import org.courierdost.utils.AppiumUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -16,6 +17,8 @@ public class AndroidBaseTest extends AppiumUtils{
 
 	public AndroidDriver driver;
 	public AppiumDriverLocalService service;
+	public Properties prop;
+
 	
 	@BeforeClass(alwaysRun=true)
 	public void ConfigureAppium() throws IOException

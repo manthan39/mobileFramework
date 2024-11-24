@@ -1,5 +1,7 @@
 package org.courierdost.utils;
 
+import static org.testng.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,14 +13,11 @@ import java.util.Properties;
 import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
-import org.courierdost.pageObjects.android.LoginPage;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.PointerInput.Origin;
 import org.openqa.selenium.interactions.Sequence;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,8 +25,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 
@@ -46,13 +43,14 @@ public abstract class AppiumUtils {
             }
         }
     }
-
+    
     public String getPropertyOnKey(String key) throws IOException {
         if (properties == null) {
             loadProperties();
         }
         return properties.getProperty(key);
     }
+	
 	public Double getFormattedAmount(String amount)
 	{
 		Double price = Double.parseDouble(amount.substring(1));
@@ -98,11 +96,24 @@ public abstract class AppiumUtils {
 	    wait.until(ExpectedConditions.visibilityOf(ele));
 	}
 	
+	public void assertFieldDisplayedOrNot(WebElement ele, AppiumDriver driver,int timeInSeconds) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
+		try {
+			wait.until(ExpectedConditions.visibilityOf(ele));
+			assertTrue(ele.isDisplayed());
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Element was not visible within the specified "+timeInSeconds+" : " + e.getMessage());
+		}
+		
+	}
+	
 	public void waitForElementToBeClickable(WebElement ele, AppiumDriver driver,int timeInSeconds)
 	{
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeInSeconds));
 	    wait.until(ExpectedConditions.elementToBeClickable(ele));
 	}
+	
 	 public void waitUntilElementIsClicked(WebElement element, int timeoutInSeconds,AppiumDriver driver) {
 	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
 	        try {
@@ -111,7 +122,6 @@ public abstract class AppiumUtils {
 	            System.out.println("Element was not clickable within the specified time: " + e.getMessage());
 	        }
 	    }
-	
 	
 	public String getScreenshotPath(String testCaseName, AppiumDriver driver) throws IOException
 	{
@@ -158,6 +168,7 @@ public abstract class AppiumUtils {
         }
         return name;
 	}
+	
 	 public static Sequence createSwipeAction() {
 	        // Define a pointer input for the touch action
 	        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");

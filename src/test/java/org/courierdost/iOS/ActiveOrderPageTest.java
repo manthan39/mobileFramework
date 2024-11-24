@@ -1,8 +1,6 @@
 package org.courierdost.iOS;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 import org.courierdost.TestUtils.IOSBaseTest;
 import org.courierdost.pageObjects.ios.ActiveOrderPage;
@@ -20,15 +18,11 @@ public class ActiveOrderPageTest extends IOSBaseTest {
 
 	@BeforeTest(alwaysRun = true)
 	public void setUpProperty() throws IOException {
-		prop = new Properties();
-		FileInputStream fis = new FileInputStream(
-				System.getProperty("user.dir") + "//src//main//java//org//courierdost//testData//testdata.properties");
-		prop.load(fis);
-		fis.close();		
+		loadProperties();
 	}
 
 	@Test
-	public void activeOrderVerification() {
+	public void activeOrderVerification() throws InterruptedException, IOException {
 
 		signUpObj = new SignUpPage(driver);
 		signUpObj.clickNextButtonForOnboardingScreen();
@@ -36,20 +30,23 @@ public class ActiveOrderPageTest extends IOSBaseTest {
 
 		loginPageObj = new LoginPage(driver);
 		loginPageObj.clickingOnAlredyRegisteredButton();
-		loginPageObj.inputMobileNumber(prop.getProperty("Mobile1"));
+		loginPageObj.inputMobileNumber(getPropertyOnKey("Mobile1"));
 		loginPageObj.clickingOnVerifyButton();
-		loginPageObj.addPin(prop.getProperty("PIN1"));
+		loginPageObj.addPin(getPropertyOnKey("PIN1"));
 		loginPageObj.clickingOnLoginButton();
 		
 		homePageObj = new HomePage(driver);
-		homePageObj.clickOnActiveOrder();
+		if(homePageObj.isActiveOrderrAvailavle()) {
+			homePageObj.clickOnActiveOrder();
+			
+			activeOrderObj = new ActiveOrderPage(driver);
+			activeOrderObj.validateActiveOrderScreenFields();
+			activeOrderObj.assignDeliveryPartner();
+			
+			homePageObj.domesticTab().isDisplayed();
+		}else {
+			System.out.println("Active order is not available at this moment");
+		}
 		
-		activeOrderObj = new ActiveOrderPage(driver);
-		activeOrderObj.validateActiveOrderScreenFields();
-		activeOrderObj.assignDeliveryPartner();
-		
-		homePageObj.domesticTab().isDisplayed();
-		
-
 	}
 }

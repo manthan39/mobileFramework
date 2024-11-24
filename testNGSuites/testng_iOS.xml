@@ -6,10 +6,11 @@
 	</listeners>
 	<test thread-count="5" name="CD tetss">
 		<classes>
-			<class name="org.courierdost.iOS.LoginTest" />
 			<class name="org.courierdost.iOS.SignUpTest" />
+			<class name="org.courierdost.iOS.LoginTest" />
 			<class name="org.courierdost.iOS.HomePageTest" />
 			<class name="org.courierdost.iOS.ActiveOrderPageTest" />
+			<class name="org.courierdost.iOS.NewOrderTest" />
 		</classes>
 	</test> 
 </suite> 

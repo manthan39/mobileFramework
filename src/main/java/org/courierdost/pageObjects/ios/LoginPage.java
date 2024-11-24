@@ -28,6 +28,10 @@ public class LoginPage extends IOSActions{
 
 	public FlutterFinder finder = new FlutterFinder(this.driver);
 	
+	public WebElement SignUpButton() {
+		return driver.findElement(AppiumBy.accessibilityId("Register a new company? Signup"));
+	}
+	
 	public WebElement clickAlreadyRegisteredButton() {
 		return driver.findElement(By.xpath("//XCUIElementTypeStaticText[@name=\"Already registered?\n"
 				+ " Login\"]"));
@@ -57,6 +61,49 @@ public class LoginPage extends IOSActions{
 	
 	public WebElement clickLoginButton() {
 		return driver.findElement(AppiumBy.accessibilityId("Login"));
+	}
+	
+	
+	public WebElement clickOtp() {
+		return driver.findElement(AppiumBy.iOSClassChain("**/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeTextField"));
+	}
+	
+	public WebElement enterOtp() {
+		return driver.findElement(AppiumBy.iOSClassChain("**/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeTextField"));
+	}
+	
+	public WebElement addfirstPin() {
+		return driver.findElement(AppiumBy.accessibilityId("Enter a 4-digit PIN"));
+
+	}
+
+	public WebElement reEnterPin() {
+		return driver.findElement(AppiumBy.accessibilityId("Re-enter the 4-digit PIN"));
+
+	}
+	
+	public WebElement savePINandContinue() {
+		return driver.findElement(AppiumBy.accessibilityId("Save PIN and continue"));
+	}
+	
+	public WebElement enterYourName() {
+		return driver.findElement(AppiumBy.accessibilityId("Enter your name"));
+	}
+	
+	public WebElement setYourPhotoButton() {
+		return driver.findElement(AppiumBy.accessibilityId("Set your profile photo"));
+	}
+	
+	private WebElement chooseFromGalary() {
+		return driver.findElement(AppiumBy.accessibilityId("Choose from library"));
+	}
+	
+	private WebElement chhosePhoto() {
+		return driver.findElement(AppiumBy.iOSClassChain("**/XCUIElementTypeImage[`name == \"PXGGridLayout-Info\"`][1]"));
+	}
+	
+	private WebElement nextButton() {
+		return driver.findElement(AppiumBy.accessibilityId("Next"));
 	}
 	
 	// ===========Locators end================================================//

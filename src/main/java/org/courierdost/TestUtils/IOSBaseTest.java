@@ -1,15 +1,13 @@
 package org.courierdost.TestUtils;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 
 import org.courierdost.utils.AppiumUtils;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
@@ -21,7 +19,7 @@ public class IOSBaseTest extends AppiumUtils {
 	public AppiumDriverLocalService service;
 	public Properties prop;
 
-	@BeforeClass(alwaysRun = true)
+	@BeforeMethod(alwaysRun = true)
 	public void ConfigureAppium() throws IOException {
 
 		// service = startAppiumServer(ipAddress,Integer.parseInt(port));
@@ -38,11 +36,11 @@ public class IOSBaseTest extends AppiumUtils {
 		options.setCapability("permissions", "{\"com.itdcd.vendor\": {\"photos\": \"yes\", \"location\": \"yes\"}}");
 
 		driver = new IOSDriver(new URL("http://127.0.0.1:4723"), options);
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
 	}
 
-	@AfterClass
+	@AfterMethod
 	public void tearDown() {
 		driver.quit();
 	}

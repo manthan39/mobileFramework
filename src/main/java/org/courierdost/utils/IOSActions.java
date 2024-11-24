@@ -58,11 +58,11 @@ public class IOSActions extends AppiumUtils{
 	}
 	
 	
-	public void swipeAction(WebElement ele,String direction)
+	public void swipeAction(String direction)
 	{
 		Map<String,Object> params1 = new HashMap<String,Object> ();
-		params1.put("direction","left");
-		//params1.put("element", ((RemoteWebElement)ele).getId());
+		params1.put("direction",direction);
+	//	params1.put("element", ((RemoteWebElement)ele).getId());
 		driver.executeScript("mobile:swipe", params1);
 		
 	}

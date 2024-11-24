@@ -51,13 +51,20 @@ public class HomePage extends IOSActions{
 		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeImage[contains(@name, 'Order ID')]"));
 	}
 	
+	public WebElement firstNewOrderOnHomePage() {
+		return driver.findElement(AppiumBy.xpath("(//XCUIElementTypeOther[contains(@name, 'Order ID')])[1]"));
+	}
 	
 	public WebElement pendingOrderClick() {
-		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeStaticText[contains(@name, 'Pending orders')]"));
+		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeImage[contains(@name, 'Pending orders')]"));
 	}
 	
 	public WebElement pastOrderlClick() {
 		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeStaticText[contains(@name, 'Past orders')]"));
+	}
+	
+	public WebElement showAllOrderLinkForActiveOrder() {
+		return driver.findElement(AppiumBy.xpath("(//XCUIElementTypeImage[@name=\"Show all\"])[1]"));
 	}
 	
 	// ===========Locators end================================================//
@@ -87,5 +94,20 @@ public class HomePage extends IOSActions{
 	public void clickOnActiveOrder() {
 		waitForElementToBeClickable(firstActiveOrderOnHomePage(), driver, 10);
 		firstActiveOrderOnHomePage().click();
+	}
+	
+	public void clickOnNewOrder() {
+		waitForElementToBeClickable(firstNewOrderOnHomePage(), driver, 10);
+		firstNewOrderOnHomePage().click();
+	}
+	
+	public boolean isNewOrderAvailavle() throws InterruptedException {
+		Thread.sleep(5000);
+		return firstNewOrderOnHomePage().isDisplayed();
+	}
+	
+	public boolean isActiveOrderrAvailavle() throws InterruptedException {
+		Thread.sleep(5000);
+		return firstActiveOrderOnHomePage().isDisplayed();
 	}
 }

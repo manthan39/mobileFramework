@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.Arrays;
 
 import org.courierdost.utils.AndroidActions;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -12,6 +13,8 @@ import org.openqa.selenium.interactions.Sequence;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 
 public class LoginPage extends AndroidActions{
 	public AndroidDriver driver;
@@ -23,12 +26,16 @@ public class LoginPage extends AndroidActions{
 	}
 
 
-    public WebElement mobileNumberInput() {
+    public WebElement mobileNumberInput() throws InterruptedException {
+    	Thread.sleep(2000);
     	return driver.findElement(AppiumBy.xpath("//android.widget.EditText"));
     }
 
-    public void enterMobileNumber(String mobileNumber) {
+    public void enterMobileNumber(String mobileNumber) throws InterruptedException {
+    	
         mobileNumberInput().click();
+        waitForElementToBeClickable(mobileNumberInput(), driver, 200);
+        waitUntilElementIsClicked(mobileNumberInput(), 200, driver);
         mobileNumberInput().sendKeys(mobileNumber);
     }
 
@@ -45,7 +52,8 @@ public class LoginPage extends AndroidActions{
     }
     
     public void clickVerifyButton() {
-        verifyButton().click();
+    	waitUntilElementIsClicked(verifyButton(), 200, driver);
+        
     }
     
     private WebElement loginLink() {
@@ -58,6 +66,9 @@ public class LoginPage extends AndroidActions{
     
     private WebElement loginButton() {
         return driver.findElement(AppiumBy.accessibilityId("Login"));
+    }
+    private WebElement otpOnLogin() {
+    	 return driver.findElement(AppiumBy.xpath("//android.widget.EditText"));
     }
     
     public void clickloginButton() {
@@ -111,5 +122,61 @@ public class LoginPage extends AndroidActions{
     public void fillOTP(String OTP) {
 		addOTP(OTP);		
 	}
+    private void fillOTPOnLogin(String pin) throws InterruptedException {
+    	Thread.sleep(400);
+    	waitForElementToAppear(otpOnLogin(), driver, 500);
+	//	otpOnLogin().click();
+		waitUntilElementIsClicked(otpOnLogin(), 1000, driver);
+		 for (char digit : pin.toCharArray()) {
+	            AndroidKey key = getAndroidKeyForDigit(digit);
+	            if (key != null) {
+	                ((AndroidDriver) driver).pressKey(new KeyEvent(key));
+	            } else {
+	                throw new IllegalArgumentException("Invalid digit in OTP: " + digit);
+	            }
+	        }
+		
+	}
+    private AndroidKey getAndroidKeyForDigit(char digit) {
+        switch (digit) {
+            case '0': return AndroidKey.DIGIT_0;
+            case '1': return AndroidKey.DIGIT_1;
+            case '2': return AndroidKey.DIGIT_2;
+            case '3': return AndroidKey.DIGIT_3;
+            case '4': return AndroidKey.DIGIT_4;
+            case '5': return AndroidKey.DIGIT_5;
+            case '6': return AndroidKey.DIGIT_6;
+            case '7': return AndroidKey.DIGIT_7;
+            case '8': return AndroidKey.DIGIT_8;
+            case '9': return AndroidKey.DIGIT_9;
+            default: return null;
+        }
+    }
+    HomePage hp = new HomePage(driver);
+    public void logmein(String mobile, String pin) throws InterruptedException {
+    	try {
+    		
+    	
+    	WebElement skip= driver.findElement(AppiumBy.accessibilityId("Skip"));
+    	waitForElementToAppear(skip, driver, 200);
+    	if(skip.isDisplayed()) {
+    		skip.click();
+    		}
+    	}
+    	catch (NoSuchElementException | org.openqa.selenium.TimeoutException e) {
+    		 System.out.println("Skip button not found. Proceeding with login.");
+		}
+    	clickloginLink();
+    	
+		enterMobileNumber(mobile);
+		clickVerifyButton();
+		fillOTPOnLogin(pin);
+		clickloginButton();
+		
+		
+    }
+
+
+	
 
 }

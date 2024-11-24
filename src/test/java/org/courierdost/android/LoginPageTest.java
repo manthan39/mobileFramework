@@ -28,9 +28,9 @@ public class LoginPageTest extends AndroidBaseTest  {
 	public void loginpageAsVendor() throws InterruptedException {
 		loginPageObj = new LoginPage(driver);
 		loginPageObj.clickloginLink();
-		loginPageObj.enterMobileNumber("3114859375");
+		loginPageObj.enterMobileNumber(prop.getProperty("Mobile1"));
 		loginPageObj.clickVerifyButton();
-		loginPageObj.fillOTP("1234");
+		loginPageObj.fillOTP(prop.getProperty("PIN1"));
 		loginPageObj.clickloginButton();
 		loginPageObj.clickSingUpButton();
 		loginPageObj.clicktncdetails();

@@ -32,3 +32,5 @@ test-output/        # TestNG output directory
 # Other temporary files or folders
 *.swp               # Vim temporary files
 *.bak               # Backup files
+/bin/
+/target/

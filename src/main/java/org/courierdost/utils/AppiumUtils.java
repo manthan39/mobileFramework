@@ -1,15 +1,21 @@
 package org.courierdost.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
+import org.courierdost.pageObjects.android.LoginPage;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.PointerInput.Origin;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -29,7 +35,24 @@ public abstract class AppiumUtils {
 
 	public AppiumDriverLocalService service;
 
-	
+	public Properties properties;
+
+    public void loadProperties() throws IOException {
+        if (properties == null) {
+            properties = new Properties();
+            String filePath = System.getProperty("user.dir") + "//src//main//java//org//courierdost//testData//testdata.properties";
+            try (FileInputStream fis = new FileInputStream(filePath)) {
+                properties.load(fis);
+            }
+        }
+    }
+
+    public String getPropertyOnKey(String key) throws IOException {
+        if (properties == null) {
+            loadProperties();
+        }
+        return properties.getProperty(key);
+    }
 	public Double getFormattedAmount(String amount)
 	{
 		Double price = Double.parseDouble(amount.substring(1));
@@ -135,5 +158,22 @@ public abstract class AppiumUtils {
         }
         return name;
 	}
+	 public static Sequence createSwipeAction() {
+	        // Define a pointer input for the touch action
+	        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+	        
+	        // Create a new sequence for the swipe action
+	        Sequence swipe = new Sequence(finger, 1);
+
+	        // Define the start point (bottom-middle of the screen)
+	        swipe.addAction(finger.createPointerMove(Duration.ZERO, Origin.viewport(), 500, 1500));
+	        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+
+	        // Define the end point (top-middle of the screen)
+	        swipe.addAction(finger.createPointerMove(Duration.ofMillis(1000), Origin.viewport(), 500, 100));
+	        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+	        return swipe;
+	    }
 	
 }

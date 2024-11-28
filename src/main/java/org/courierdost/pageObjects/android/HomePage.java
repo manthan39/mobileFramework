@@ -44,7 +44,9 @@ public class HomePage extends AndroidActions{
     private WebElement settingsTab() {
         return driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Settings\nTab 4 of 4']"));
     }
-    
+    public WebElement noPickUpRequestHeader() {
+		return driver.findElement(AppiumBy.accessibilityId("No pickup requests available"));
+	}
     private WebElement statisticsTab() {
         return driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Statistics\nTab 2 of 4']"));
     }
@@ -52,7 +54,18 @@ public class HomePage extends AndroidActions{
     private WebElement supportTab() {
         return driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Supports\nTab 3 of 4']"));
     }
-    
+
+	public WebElement firstNewOrderOnHomePage() {
+		return driver.findElement(AppiumBy.xpath("//android.view.View[contains(@content-desc, 'Order ID') and @index='0']"));
+
+	}
+	
+	public WebElement pendingOrderClick() {
+		return driver.findElement(AppiumBy.xpath("//android.widget.ImageView[contains(@content-desc, 'Pending orders')]"));
+
+	}
+	
+	//==============Web elements completed========================//
     
     public void clickOnStatisticsTab() {
     	statisticsTab().click();
@@ -90,5 +103,14 @@ public class HomePage extends AndroidActions{
     	domesticTab().click();
     }
       
+	public void clickOnNewOrder() {
+		waitForElementToBeClickable(firstNewOrderOnHomePage(), driver, 10);
+		firstNewOrderOnHomePage().click();
+	}
+	
+	public boolean isNewOrderAvailavle() throws InterruptedException {
+		Thread.sleep(5000);
+		return firstNewOrderOnHomePage().isDisplayed();
+	}
 
 }

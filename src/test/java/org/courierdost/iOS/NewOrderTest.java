@@ -12,22 +12,21 @@ import org.courierdost.pageObjects.ios.SignUpPage;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class NewOrderTest extends IOSBaseTest{
+public class NewOrderTest extends IOSBaseTest {
 	SignUpPage signUpObj;
 	LoginPage loginPageObj;
 	HomePage homePageObj;
 	NewOrderPage newOrderObj;
-	
+
 	@BeforeTest(alwaysRun = true)
 	public void setUpProperty() throws IOException {
-		loadProperties();	
+		loadProperties();
 	}
-	
-	@Test
+
+	@Test(groups = {"Smoke"},description = "Verfiy the new order screen if new orders available in homepage")
 	public void newOrderVerification() throws InterruptedException, IOException {
 		signUpObj = new SignUpPage(driver);
 		signUpObj.clickNextButtonForOnboardingScreen();
-		
 
 		loginPageObj = new LoginPage(driver);
 		loginPageObj.clickingOnAlredyRegisteredButton();
@@ -35,23 +34,22 @@ public class NewOrderTest extends IOSBaseTest{
 		loginPageObj.clickingOnVerifyButton();
 		loginPageObj.addPin(getPropertyOnKey("PIN1"));
 		loginPageObj.clickingOnLoginButton();
-		
+
 		homePageObj = new HomePage(driver);
-		if(homePageObj.isNewOrderAvailavle()) {
+		if (homePageObj.noNewOrderAvailable() == 0) {
 			homePageObj.clickOnNewOrder();
-			
+
 			newOrderObj = new NewOrderPage(driver);
 			newOrderObj.VerifyNewBidDetails();
 			newOrderObj.enterBidPrice();
 			newOrderObj.selectCourierPartner();
 			newOrderObj.selectEstimationDateAndTime();
 			newOrderObj.successScreenValidation();
-		}else {
+		} else {
 			assertTrue(homePageObj.noPickUpRequestHeader().isDisplayed());
 			System.out.println("New order is not available at this moment.");
 		}
-		
-		
+
 	}
 
 }

@@ -2,12 +2,12 @@ package org.courierdost.pageObjects.ios;
 
 import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
 
 import org.courierdost.utils.IOSActions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -15,7 +15,6 @@ import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.ios.IOSDriver;
 import io.github.ashwith.flutter.FlutterFinder;
 
@@ -28,6 +27,14 @@ public class SignUpPage extends IOSActions {
 	}
 
 	public FlutterFinder finder = new FlutterFinder(this.driver);
+	
+	public WebElement keyBoardDoneButon() {
+		return driver.findElement(AppiumBy.accessibilityId("Done"));
+	}
+	
+	public WebElement keyBoardNextButton() {
+		return driver.findElement(AppiumBy.accessibilityId("Next:"));
+	}
 
 	public WebElement getNextButton() {
 		return driver.findElement(AppiumBy.accessibilityId("Next"));
@@ -120,13 +127,21 @@ public class SignUpPage extends IOSActions {
 		return driver.findElement(AppiumBy.accessibilityId("Search for a specific locality"));
 	}
 	
-	private WebElement seelctFirstSuggestions() {
-		return driver.findElement(By.xpath("//XCUIElementTypeStaticText[@name=\"Ahmedabad\n"
-				+ "Ahmedabad, Gujarat, India\"]"));
+	private WebElement selectFirstSuggestions(String place) {
+		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeStaticText[contains(@name,' "+place +"')]"));
 	}
+	
+	private WebElement locateMeButton() {
+		return driver.findElement(AppiumBy.accessibilityId("Locate Me"));
+	}
+	
 	
 	private WebElement addMoreDetailsButton() {
 		return driver.findElement(AppiumBy.accessibilityId("Add more details"));
+	}
+	
+	private List<WebElement> countaddMoreDetailsButton() {
+		return driver.findElements(AppiumBy.accessibilityId("Add more details"));
 	}
 	
 	private WebElement addressSaveButton() {
@@ -138,7 +153,7 @@ public class SignUpPage extends IOSActions {
 	}
 	
 	private WebElement invalidGSTNumberError() {
-		return driver.findElement(AppiumBy.accessibilityId("[Internal Error]: [401] [Invalid gst number format}]"));
+		return driver.findElement(AppiumBy.accessibilityId("[Internal Error]: Invalid gst number format"));
 	}
 	
 	public WebElement enterValidOTPError() {
@@ -201,15 +216,30 @@ public class SignUpPage extends IOSActions {
 	public WebElement enterAddressLine1() {
 		return driver.findElement(AppiumBy.accessibilityId("Address line 1"));
 	}
+	
+	public WebElement pressOutsideTheFiels() {
+		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeOther"));
+	}
 	// ===========Locators end================================================//
 	
+	public void waitForPhoneNumberFieldToDisplayed() throws InterruptedException {
+		int count = driver.findElements(AppiumBy.accessibilityId("Phone number")).size();
+		int iterate =0;
+		while(count<1 && iterate<6) {
+			Thread.sleep(4000);
+			iterate++;
+			count=driver.findElements(AppiumBy.accessibilityId("Phone number")).size();
+		}
+	}
 	
-	public void inviteYourFriendScreenError() {
+	public void inviteYourFriendScreenError() throws InterruptedException {
+		waitForPhoneNumberFieldToDisplayed();
+		
 		inputPhoneNumber().click();
 		backArrowFromInviteYourTEam().click();
 		proceedBtn().click();
 		
-		waitForElementToBeClickable(inputPhoneNumber(),driver,10);
+		waitForPhoneNumberFieldToDisplayed();
 		assertTrue(emptyMobileNumberError().isDisplayed());
 		inputPhoneNumber().click();
 		inputPhoneNumber().sendKeys("23423");
@@ -220,23 +250,30 @@ public class SignUpPage extends IOSActions {
 	}
 	
 	
-	public void addressDetailsError() {
+	public void addressDetailsError() throws IOException, InterruptedException {
 		waitForElementToBeClickable(searchBar(),driver,20);
 		searchBar().click();
-		searchBar().sendKeys("Ahmedabad");
-		waitForElementToAppear(seelctFirstSuggestions(), driver,15);
-		seelctFirstSuggestions().click();
-		waitForElementToBeClickable(addMoreDetailsButton(), driver,15);
+		searchBar().sendKeys(getPropertyOnKey("place"));
+		waitForElementToAppear(selectFirstSuggestions(getPropertyOnKey("place")), driver,15);
+		keyBoardDoneButon().click();
+		selectFirstSuggestions(getPropertyOnKey("place")).click();
+		Thread.sleep(3000);
+		
+		int countOfAddMoreDetailsButton =  countaddMoreDetailsButton().size();
+		if(countOfAddMoreDetailsButton==0) {
+			Thread.sleep(10000);
+		}
+		
 		addMoreDetailsButton().click();
 		
 		waitForElementToAppear(addressSaveButton(), driver, 10);
 		
-		crossSignOnAddressDetails().click();
 		addressSaveButton().click();
 		assertTrue(addressLine1Error().isDisplayed());
 		
 		enterAddressLine1().click();
 		enterAddressLine1().sendKeys("ellise bridge");
+		keyBoardNextButton().click();
 		addressSaveButton().click();
 		
 		
@@ -277,6 +314,7 @@ public class SignUpPage extends IOSActions {
 		gstNumberInputClick().click();
 		gstNumber().clear();
 		gstNumber().sendKeys(GST);
+		pressOutsideTheFiels();
 		proceedBtn().click();
 	}
 
@@ -324,6 +362,7 @@ public class SignUpPage extends IOSActions {
 	public void fillOTP(String OTP) throws InterruptedException {
 		addOTP(OTP);
 		waitForElementToBeClickable(verifyOTPNumber(), driver,15);
+		pressOutsideTheFiels();
 		verifyOTPNumber().click();
 
 	}
@@ -332,13 +371,14 @@ public class SignUpPage extends IOSActions {
 		addfirstPin().click();
 		Actions actions = new Actions(driver);
 		actions.sendKeys(pin).perform();
+		pressOutsideTheFiels();
 	}
 
 	public void addReEnterpin(String pin) throws InterruptedException {
 		reEnterPin().click();
 		Actions actions = new Actions(driver);
 		actions.sendKeys(pin).perform();
-		
+		pressOutsideTheFiels();
 		waitForElementToAppear(savePINandContinue(), driver,15);
 		savePINandContinue().click();
 	}
@@ -367,6 +407,8 @@ public class SignUpPage extends IOSActions {
 		enteralternatePhoneNumber().click();
 		enteralternatePhoneNumber().sendKeys(number);
 		
+		pressOutsideTheFiels();
+		
 		addCompanyLogo().click();
 		chooseFromGalary().click();
 		chhosePhoto().click();
@@ -374,23 +416,30 @@ public class SignUpPage extends IOSActions {
 		proceedBtn().click();
 	}
 	
-	public void enterPhoneNumberAndSendInvite(String phoneNumber) {
-		
-		waitForElementToBeClickable(inputPhoneNumber(), driver,90);
+	public void enterPhoneNumberAndSendInvite(String phoneNumber) throws InterruptedException {
+		waitForPhoneNumberFieldToDisplayed();
 		inputPhoneNumber().click();
 		inputPhoneNumber().sendKeys(phoneNumber);
 		waitForElementToBeClickable(sendInviteButton(), driver,15);
 		sendInviteButton().click();
 	}
 	
-	public void searchAreaAndSaveAddress() {
+	public void searchAreaAndSaveAddress() throws IOException, InterruptedException {
 		waitForElementToBeClickable(searchBar(),driver,20);
 		searchBar().click();
-		searchBar().sendKeys("Ahmedabad");
-		waitForElementToAppear(seelctFirstSuggestions(), driver,15);
-		seelctFirstSuggestions().click();
-		waitForElementToBeClickable(addMoreDetailsButton(), driver,15);
+		searchBar().sendKeys(getPropertyOnKey("place"));
+		waitForElementToAppear(selectFirstSuggestions(getPropertyOnKey("place")), driver,15);
+		keyBoardDoneButon().click();;
+		selectFirstSuggestions(getPropertyOnKey("place")).click();
+		Thread.sleep(3000);
+		int countOfAddMoreDetailsButton =  countaddMoreDetailsButton().size();
+		if(countOfAddMoreDetailsButton==0) {
+			Thread.sleep(15000);
+		}
 		addMoreDetailsButton().click();
+		waitForElementToAppear(enterAddressLine1(), driver, 10);
+		enterAddressLine1().sendKeys(getPropertyOnKey("place"));
+		keyBoardNextButton().click();;
 		waitForElementToBeClickable(addressSaveButton(), driver,15);
 		addressSaveButton().click();
 	}

@@ -8,6 +8,7 @@ import java.util.Properties;
 import org.courierdost.utils.AppiumUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
@@ -18,25 +19,27 @@ public class IOSBaseTest extends AppiumUtils {
 	public IOSDriver driver;
 	public AppiumDriverLocalService service;
 	public Properties prop;
+	public Properties propertiesCap;
 
 	@BeforeMethod(alwaysRun = true)
-	public void ConfigureAppium() throws IOException {
+	@Parameters({"platformVersion", "deviceName"})
+	public void ConfigureAppium(String platformVersion, String deviceName) throws IOException {
 
-		// service = startAppiumServer(ipAddress,Integer.parseInt(port));
+		String iOSPlatformVersion = platformVersion;
+		String iOSDeviceNAme = deviceName;
+		String permissions = "{\"com.itdcd.vendor\": {\"photos\": \"yes\", \"location\": \"yes\"}}";
 
 		XCUITestOptions options = new XCUITestOptions();
-		options.setDeviceName("iPhone 16 Pro");
+		options.setDeviceName(iOSDeviceNAme);
 		options.setApp(System.getProperty("user.dir") + "//src//main//java//org//courierdost//resources//Runner.app");
 
-		/// Users/bhagatsinhk/Documents/bgtkher002/AppiumFramework/src/test/java/org/courierdost/resources
-		options.setPlatformVersion("18.1");
-		// Appium- Webdriver Agent -> IOS Apps.
+		options.setPlatformVersion(iOSPlatformVersion);
 		options.setWdaLaunchTimeout(Duration.ofSeconds(20));
 		options.setCapability("autoAcceptAlerts", true);
-		options.setCapability("permissions", "{\"com.itdcd.vendor\": {\"photos\": \"yes\", \"location\": \"yes\"}}");
-
+		options.setCapability("autoDismissKeyboard", true);
+		options.setCapability("permissions", permissions);
 		driver = new IOSDriver(new URL("http://127.0.0.1:4723"), options);
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
 	}
 

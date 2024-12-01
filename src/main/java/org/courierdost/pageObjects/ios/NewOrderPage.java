@@ -3,7 +3,6 @@ package org.courierdost.pageObjects.ios;
 import java.time.LocalDate;
 
 import org.courierdost.utils.IOSActions;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import io.appium.java_client.AppiumBy;
@@ -65,7 +64,7 @@ public class NewOrderPage extends IOSActions{
 	}
 	
 	public WebElement priceInclusiveField() {
-		return driver.findElement(AppiumBy.accessibilityId("All-inclusive: GST, fuel surcharge, and additional fees covered"));
+		return driver.findElement(AppiumBy.accessibilityId("Inclusive of fuel surcharge and additional charges but Exclusive of GST."));
 	}
 	
 	public WebElement courierPartnerField() {
@@ -77,7 +76,7 @@ public class NewOrderPage extends IOSActions{
 	}
 	
 	public WebElement estimationDateAndTime() {
-		return driver.findElement(AppiumBy.accessibilityId("Select Delivery Estimation Date Time"));
+		return driver.findElement(AppiumBy.accessibilityId("Select Delivery Estimation Date"));
 	}
 	
 	public WebElement selectTomorrowsDate(int day) {
@@ -85,12 +84,16 @@ public class NewOrderPage extends IOSActions{
 	    return driver.findElement(AppiumBy.xpath(xpath));
 	}
 	
+	public WebElement nextMonthbutton() {
+		return driver.findElement(AppiumBy.accessibilityId("Next month"));
+	}
+	
 	public WebElement okButton() {
 		return driver.findElement(AppiumBy.accessibilityId("OK"));
 	}
 	
 	public WebElement nextButton() {
-		return driver.findElement(AppiumBy.accessibilityId("Next"));
+		return driver.findElement(AppiumBy.accessibilityId("Place bid"));
 	}
 	
 	public WebElement successMessage() {
@@ -144,6 +147,10 @@ public class NewOrderPage extends IOSActions{
 		assertFieldDisplayedOrNot(estimationDateAndTime(), driver, 10);
 		estimationDateAndTime().click();
 		int tomorrowDay = LocalDate.now().plusDays(1).getDayOfMonth();
+		
+		if(tomorrowDay==1 || tomorrowDay==2) {
+			nextMonthbutton().click();
+		}
 		selectTomorrowsDate(tomorrowDay).click();
 		okButton().click();
 		
@@ -151,9 +158,15 @@ public class NewOrderPage extends IOSActions{
 		nextButton().click();
 	}
 	
-	public void successScreenValidation() {
-		assertFieldDisplayedOrNot(successMessage(), driver, 10);
-		assertFieldDisplayedOrNot(subTextMessageInSuccessScreen(), driver, 10);
+	public void successScreenValidation() throws InterruptedException {
+		int successMessageEleCount = driver.findElements(AppiumBy.xpath("//XCUIElementTypeStaticText[contains(@name,\"Bid of\")]")).size();
+		int iterate =0;
+		while(successMessageEleCount<1 && iterate<6) {
+			Thread.sleep(4000);
+			iterate++;
+			successMessageEleCount = driver.findElements(AppiumBy.xpath("//XCUIElementTypeStaticText[contains(@name,\"Bid of\")]")).size();
+		}
+		assertFieldDisplayedOrNot(subTextMessageInSuccessScreen(), driver, 40);
 		okayButton().click();
 	}
 	

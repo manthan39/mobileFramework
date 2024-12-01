@@ -2,15 +2,12 @@ package org.courierdost.iOS;
 
 import static org.testng.Assert.assertTrue;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 import org.courierdost.TestUtils.IOSBaseTest;
 import org.courierdost.pageObjects.ios.HomePage;
 import org.courierdost.pageObjects.ios.LoginPage;
 import org.courierdost.pageObjects.ios.SignUpPage;
-import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -24,7 +21,7 @@ public class SignUpTest extends IOSBaseTest  {
     	loadProperties();
     }
 	
-	@Test(priority = 1)
+	@Test(groups = {"Smoke"},description = "Verfiy the sign up flow")
 	public void signUpAsVendor() throws InterruptedException, IOException {
 		
 		signUpObj = new SignUpPage(driver);
@@ -48,7 +45,7 @@ public class SignUpTest extends IOSBaseTest  {
 		
 	}
 	
-	@Test(priority = 2)
+	@Test(groups = {"Regression"},description = "Verfiy the sign up flow with error messages")
 	public void errorCasesForSignUpFlow() throws InterruptedException, IOException {
 		signUpObj = new SignUpPage(driver);
 		signUpObj.clickNextButtonForOnboardingScreen();
@@ -81,11 +78,7 @@ public class SignUpTest extends IOSBaseTest  {
 		
 		signUpObj.additionaDetailsError();
 		signUpObj.additionalDetailsPage(generateName(), generateName(), generateMobileNumber());
-		
-		waitForElementToBeClickable(signUpObj.inputPhoneNumber(), driver,90);
-		
-		//Need to check this
-		
+						
 		signUpObj.inviteYourFriendScreenError();
 		
 		signUpObj.addressDetailsError();

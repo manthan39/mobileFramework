@@ -19,8 +19,8 @@ public class HomePageTest extends IOSBaseTest {
 		loadProperties();
 	}
 
-	@Test
-	public void homePageVerification() throws IOException {
+	@Test(groups = {"Regression"},description = "Verfiy the home page elements after login with valid credentials")
+	public void homePageVerification() throws IOException, InterruptedException {
 
 		signUpObj = new SignUpPage(driver);
 		signUpObj.clickNextButtonForOnboardingScreen();

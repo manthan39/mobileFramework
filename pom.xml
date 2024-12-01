@@ -1,18 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.courierdost</groupId>
-  <artifactId>AppiumFrameworkDesign</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+	<groupId>org.courierdost</groupId>
+	<artifactId>AppiumFrameworkDesign</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
-  <name>AppiumFrameworkDesign</name>
-  <!-- FIXME change it to the project's website -->
-  <!--  mvn test -PRegression -->
-  <url>http://www.example.com</url>
+	<name>AppiumFrameworkDesign</name>
+	<!-- FIXME change it to the project's website -->
+	<!--  mvn test -PRegression -->
+	<url>http://www.example.com</url>
 
-  
 
-  <dependencies>
+	<dependencies>
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
@@ -58,58 +60,22 @@
 			<version>4.17.0</version>
 		</dependency>
 	</dependencies>
-  
- <profiles>
 
-		<profile>
-			<id>Regression</id>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-surefire-plugin</artifactId>
-							<version>3.0.0-M7</version>
-							<configuration>
-								<suiteXmlFiles>
-									<suiteXmlFile>testng.xml</suiteXmlFile>
-								</suiteXmlFiles>
-								<printSummary>true</printSummary>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-
-
-		<profile>
-			<id>Smoke</id>
-
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-surefire-plugin</artifactId>
-							<version>3.0.0-M7</version>
-							<configuration>
-								<suiteXmlFiles>
-									<suiteXmlFile>testng.xml</suiteXmlFile>
-								</suiteXmlFiles>
-								<printSummary>true</printSummary>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-
-		</profile>
-
-
-	</profiles>
-  
-  <properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M7</version>
+				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>testNGSuites/testng_iOS.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<surefire.plugin.version>3.0.0-M5</surefire.plugin.version>

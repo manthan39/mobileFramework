@@ -33,7 +33,7 @@ public abstract class AppiumUtils {
 	public AppiumDriverLocalService service;
 
 	public Properties properties;
-
+	
     public void loadProperties() throws IOException {
         if (properties == null) {
             properties = new Properties();
@@ -43,7 +43,7 @@ public abstract class AppiumUtils {
             }
         }
     }
-    
+  
     public String getPropertyOnKey(String key) throws IOException {
         if (properties == null) {
             loadProperties();

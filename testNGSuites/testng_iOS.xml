@@ -4,13 +4,22 @@
 	<listeners>
 		<listener class-name="org.courierdost.TestUtils.Listeners" />
 	</listeners>
-	<test thread-count="5" name="CD tetss">
+	<test thread-count="5" name="CD tets group">
+		<parameter name="platformVersion" value="${platformVersion:Default_Version}" />
+		<parameter name="deviceName" value="${deviceName:Default_Device}" />
+		<parameter name="groups" value="${test.groups}"/>
+		<groups>
+			<run>
+				<include name="${test.groups}"> </include>
+			</run>
+		</groups>
 		<classes>
-			<class name="org.courierdost.iOS.SignUpTest" />
 			<class name="org.courierdost.iOS.LoginTest" />
+			<class name="org.courierdost.iOS.SignUpTest" />
 			<class name="org.courierdost.iOS.HomePageTest" />
 			<class name="org.courierdost.iOS.ActiveOrderPageTest" />
 			<class name="org.courierdost.iOS.NewOrderTest" />
+			<class name="org.courierdost.iOS.PendingOrderTest" />
 		</classes>
-	</test> 
+	</test>
 </suite> 

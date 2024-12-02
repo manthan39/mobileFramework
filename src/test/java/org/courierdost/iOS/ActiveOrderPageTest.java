@@ -21,7 +21,7 @@ public class ActiveOrderPageTest extends IOSBaseTest {
 		loadProperties();
 	}
 
-	@Test
+	@Test(groups = {"Regression"},description = "Verfiy the active order page if active order is present")
 	public void activeOrderVerification() throws InterruptedException, IOException {
 
 		signUpObj = new SignUpPage(driver);
@@ -30,13 +30,13 @@ public class ActiveOrderPageTest extends IOSBaseTest {
 
 		loginPageObj = new LoginPage(driver);
 		loginPageObj.clickingOnAlredyRegisteredButton();
-		loginPageObj.inputMobileNumber(getPropertyOnKey("Mobile1"));
+		loginPageObj.inputMobileNumber(getPropertyOnKey("Mobile"));
 		loginPageObj.clickingOnVerifyButton();
-		loginPageObj.addPin(getPropertyOnKey("PIN1"));
+		loginPageObj.addPin(getPropertyOnKey("PIN"));
 		loginPageObj.clickingOnLoginButton();
 		
 		homePageObj = new HomePage(driver);
-		if(homePageObj.isActiveOrderrAvailavle()) {
+		if(homePageObj.noActiveOrderScreenAvailable()==0) {
 			homePageObj.clickOnActiveOrder();
 			
 			activeOrderObj = new ActiveOrderPage(driver);

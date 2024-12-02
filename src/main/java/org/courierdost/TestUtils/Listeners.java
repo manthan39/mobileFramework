@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.model.Log;
 
 import io.appium.java_client.AppiumDriver;
 
@@ -22,13 +23,17 @@ public class Listeners extends AppiumUtils implements ITestListener{
 	@Override
 	public void onTestStart(ITestResult result) {
 		// TODO Auto-generated method stub
-		 test= extent.createTest(result.getMethod().getMethodName());
+		System.out.println("Test Started: " + result.getName());
+    	test= extent.createTest(result.getMethod().getMethodName()).info(result.getMethod().getDescription());
+		 
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		// TODO Auto-generated method stub
+		System.out.println("Test Passed: " + result.getName());
 		test.log(Status.PASS, "Test Passed");
+		
 		
 	}
 
@@ -36,6 +41,7 @@ public class Listeners extends AppiumUtils implements ITestListener{
 	public void onTestFailure(ITestResult result) {
 		// TODO Auto-generated method stub
 		//screenshot code
+		System.out.println("Test Failed: " + result.getName());
 		test.fail(result.getThrowable());
 		
 		try {
@@ -53,11 +59,14 @@ public class Listeners extends AppiumUtils implements ITestListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
 		// TODO Auto-generated method stub
+		System.out.println("Test Skipped: " + result.getName());
+		
 		
 	}
 
@@ -70,12 +79,14 @@ public class Listeners extends AppiumUtils implements ITestListener{
 	@Override
 	public void onStart(ITestContext context) {
 		// TODO Auto-generated method stub
+		System.out.println("Test Suite Started: " + context.getName());
 		
 	}
 
 	@Override
 	public void onFinish(ITestContext context) {
 		// TODO Auto-generated method stub
+		System.out.println("Test Suite Finished: " + context.getName());
 		extent.flush();
 	}
 //

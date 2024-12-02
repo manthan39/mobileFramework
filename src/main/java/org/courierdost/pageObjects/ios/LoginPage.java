@@ -1,17 +1,10 @@
 package org.courierdost.pageObjects.ios;
 
-import java.awt.Desktop.Action;
-import java.time.Duration;
-import java.util.Arrays;
-
 import org.courierdost.utils.IOSActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.PointerInput;
-import org.openqa.selenium.interactions.Sequence;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;

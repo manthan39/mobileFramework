@@ -51,12 +51,16 @@ public class HomePage extends IOSActions{
 		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeImage[contains(@name, 'Order ID')]"));
 	}
 	
+	public WebElement noActiveOrderScreen() {
+		return driver.findElement(AppiumBy.xpath("//*[contains(@name,'No active orders currently')]"));
+	}
+	
 	public WebElement firstNewOrderOnHomePage() {
 		return driver.findElement(AppiumBy.xpath("(//XCUIElementTypeOther[contains(@name, 'Order ID')])[1]"));
 	}
 	
 	public WebElement pendingOrderClick() {
-		return driver.findElement(AppiumBy.xpath("//XCUIElementTypeImage[contains(@name, 'Pending orders')]"));
+		return driver.findElement(AppiumBy.xpath("//*[contains(@name, 'Pending orders')]"));
 	}
 	
 	public WebElement pastOrderlClick() {
@@ -69,17 +73,25 @@ public class HomePage extends IOSActions{
 	
 	// ===========Locators end================================================//
 	
-	public void verifyHomePageElements() {
+	public void verifyHomePageElements() throws InterruptedException {
 		waitForElementToAppear(domesticTab(), driver,15);
 		Assert.assertTrue(domesticTab().isDisplayed());
+		waitForElementToAppear(newOrderText(), driver,20);
+	    Assert.assertTrue(newOrderText().isDisplayed());
+	    
+	    if(noNewOrderAvailable()>0) {
+	    	Assert.assertTrue(noPickUpRequestHeader().isDisplayed());
+	    }
+		
 	    Assert.assertTrue(internationalTab().isDisplayed());
 	    internationalTab().click();
 	    domesticTab().click();
-	    waitForElementToAppear(newOrderText(), driver,20);
-	    Assert.assertTrue(newOrderText().isDisplayed());	
-	    Assert.assertTrue(noPickUpRequestHeader().isDisplayed());
+	    
+	    waitForElementToAppear(activeOrderHeader(), driver,15);
 	    Assert.assertTrue(activeOrderHeader().isDisplayed());
-	    Assert.assertTrue(firstActiveOrderOnHomePage().isDisplayed());
+	    if(noActiveOrderScreenAvailable()==0) {
+	    	Assert.assertTrue(firstActiveOrderOnHomePage().isDisplayed());
+	    }
 	    scrollToEndAction(driver);
 	    Assert.assertTrue(pendingOrderClick().isDisplayed());
 	    Assert.assertTrue(pastOrderlClick().isDisplayed());
@@ -101,13 +113,19 @@ public class HomePage extends IOSActions{
 		firstNewOrderOnHomePage().click();
 	}
 	
-	public boolean isNewOrderAvailavle() throws InterruptedException {
+	public int noNewOrderAvailable() throws InterruptedException {
 		Thread.sleep(5000);
-		return firstNewOrderOnHomePage().isDisplayed();
+		return driver.findElements(AppiumBy.accessibilityId("No pickup requests available")).size();
 	}
 	
-	public boolean isActiveOrderrAvailavle() throws InterruptedException {
+	public int noActiveOrderScreenAvailable() throws InterruptedException {
 		Thread.sleep(5000);
-		return firstActiveOrderOnHomePage().isDisplayed();
+		return driver.findElements(AppiumBy.xpath("//*[contains(@name,'No active orders currently')]")).size();
+	}
+	
+	public boolean isPendingOrderAvailable() throws InterruptedException {
+		Thread.sleep(5000);
+		scrollToEndAction(driver);
+		return pendingOrderClick().isDisplayed();
 	}
 }

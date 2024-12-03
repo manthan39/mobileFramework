@@ -33,3 +33,8 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
+      - name: Upload Test Report as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: reports/index.html

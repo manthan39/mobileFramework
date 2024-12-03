@@ -31,7 +31,7 @@ jobs:
 
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn clean test -Dplatform=android
 
       - name: Upload Test Report as Artifact
         uses: actions/upload-artifact@v3

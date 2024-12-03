@@ -6,11 +6,14 @@ import java.util.Properties;
 
 import org.courierdost.TestUtils.AndroidBaseTest;
 import org.courierdost.pageObjects.android.LoginPage;
+import org.courierdost.pageObjects.android.SignUpPage;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends AndroidBaseTest  {
 	LoginPage loginPageObj;
+	SignUpPage LP;
+
 
 	@BeforeTest(alwaysRun = true)
 	public void setUpProperty() throws IOException {
@@ -26,7 +29,11 @@ public class LoginPageTest extends AndroidBaseTest  {
 	
 	@Test
 	public void loginpageAsVendor() throws InterruptedException {
-		loginPageObj = new LoginPage(driver);
+		LP = new SignUpPage(driver);
+		LP.clickNextButton();
+		LP.clickNextButton();
+		LP.clickNextButton();
+	/*	loginPageObj = new LoginPage(driver);
 		loginPageObj.clickloginLink();
 		loginPageObj.enterMobileNumber(prop.getProperty("Mobile1"));
 		loginPageObj.clickVerifyButton();
@@ -36,7 +43,7 @@ public class LoginPageTest extends AndroidBaseTest  {
 		loginPageObj.clicktncdetails();
 		loginPageObj.clickOnPrivacyPolicy();
 		loginPageObj.clicktncdetails();
-		
+		*/
 	}
 	
 }

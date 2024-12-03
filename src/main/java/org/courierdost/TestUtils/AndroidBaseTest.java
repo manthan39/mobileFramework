@@ -29,7 +29,8 @@ public class AndroidBaseTest extends AppiumUtils{
      
         flutterCapabilities.setCapability("appium:automationName", "uiAutomator2");
         
-     
+        flutterCapabilities.setCapability("autoGrantPermissions", true); // Automatically grant permissions
+
         flutterCapabilities.setCapability("appium:app",System.getProperty("user.dir")+"//src//main//java//org//courierdost//resources//app-cd-vendor-debug.apk");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), flutterCapabilities);
 		

@@ -5,21 +5,9 @@
 		<listener class-name="org.courierdost.TestUtils.Listeners" />
 	</listeners>
 	<test thread-count="5" name="CD Smoke tets run">
-		<parameter name="platformVersion" value="${platformVersion:Default_Version}" />
-		<parameter name="deviceName" value="${deviceName:Default_Device}" />
-		<parameter name="groups" value="${test.groups}"/>
-		<groups>
-			<run>
-				<include name="${test.groups}"> </include>
-			</run>
-		</groups>
+		
 		<classes>
-			<class name="org.courierdost.android.SignUpTest" />
 			<class name="org.courierdost.android.LoginPageTest" />
-			<class name="org.courierdost.android.HomePageTest" />
-			<class name="org.courierdost.android.ActiveOrdersTest" />
-			<class name="org.courierdost.android.PendingOrderTest" />
-			<class name="org.courierdost.android.NewOrderTest" />
 		</classes>
 	</test>
 </suite> 

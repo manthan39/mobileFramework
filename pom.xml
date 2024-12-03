@@ -63,7 +63,12 @@
       <scope>compile</scope>
     </dependency>
 	</dependencies>
-
+<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
+		<platform>default</platform>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -72,7 +77,7 @@
 				<version>3.0.0-M7</version>
 				<configuration>
 					<suiteXmlFiles>
-						<suiteXmlFile>testNGSuites/testng_android.xml</suiteXmlFile>
+						<suiteXmlFile>testNGSuites/testng_${platform}.xml</suiteXmlFile>
 					</suiteXmlFiles><argLine>-javaagent:"${com.browserstack:browserstack-java-sdk:jar}"</argLine>
 				</configuration>
 			</plugin>
@@ -90,9 +95,5 @@
       </plugin>
 		</plugins>
 	</build>
-	<properties>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
-	</properties>
+	
 </project>

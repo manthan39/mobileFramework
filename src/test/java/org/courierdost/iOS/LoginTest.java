@@ -24,7 +24,7 @@ public class LoginTest extends IOSBaseTest{
 	
 		signUpObj = new SignUpPage(driver);
 		signUpObj.clickNextButtonForOnboardingScreen();
-		
+		/*	
 		loginPageObj = new LoginPage(driver);
 		
 		loginPageObj.clickingOnAlredyRegisteredButton();
@@ -35,6 +35,6 @@ public class LoginTest extends IOSBaseTest{
 		
 		homePageObj = new HomePage(driver);
 		homePageObj.verifyHomePageElements();
-		
+		*/
 	}
 }

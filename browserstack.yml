@@ -43,6 +43,9 @@ platforms:
   - deviceName: Samsung Galaxy S22 Ultra
     platformVersion: 12.0
     platformName: android
+  - deviceName: iPhone 13 Pro
+    platformVersion: 15
+    platformName: ios
 
 # =======================
 # Parallels per Platform

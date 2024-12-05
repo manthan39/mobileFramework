@@ -43,7 +43,7 @@ platforms:
   - deviceName: Samsung Galaxy S22 Ultra
     platformVersion: 12.0
     platformName: android
-  - deviceName: 11R
+  - deviceName: OnePlus 11R
     platformVersion: 13.0
     platformName: android
 

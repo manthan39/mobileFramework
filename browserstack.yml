@@ -39,10 +39,59 @@ app: bs://eaf1fbfd89947ebe34803e560b42102d1c53f39c # BrowserStack Sample App
 # =======================================
 # Platforms object contains all the browser / device combinations you want to test on.
 # Entire list available here -> (https://www.browserstack.com/list-of-browsers-and-platforms/automate)
-platforms:
-  - deviceName: Samsung Galaxy S22 Ultra
-    platformVersion: 12.0
-    platformName: android
+# browserstack.yml
+
+version: 1.0
+
+environments:
+  android:
+    # Configuration for Android device
+    platform: Android
+    devices:
+      - device: "Google Pixel 6"
+        os_version: "12"
+        real_mobile: true
+        app: "bs://<app-id>"  # Replace with your app id (for App Automate)
+        capabilities:
+          'browserstack.user': "manthanbhatiya_JpmQqv"
+          'browserstack.key': "Yu9uH66YoTCAYrD3AZc1"
+          'bstack:options':
+            deviceName: "Google Pixel 6"
+            platformName: "Android"
+            realMobile: true
+            app: "bs://eaf1fbfd89947ebe34803e560b42102d1c53f39c"
+            automationName: "UiAutomator2"  # Default automation for Android with Appium
+            appiumVersion: "1.20.2"  # Specify Appium version if needed
+
+  ios:
+    # Configuration for iOS device
+    platform: iOS
+    devices:
+      - device: "iPhone 13"
+        os_version: "15"
+        real_mobile: true
+        app: "bs://<app-id>"  # Replace with your app id (for App Automate)
+        capabilities:
+          'browserstack.user': "manthanbhatiya_JpmQqv"
+          'browserstack.key': "Yu9uH66YoTCAYrD3AZc1"
+          'bstack:options':
+            deviceName: "iPhone 13"
+            platformName: "iOS"
+            realMobile: true
+            app: "bs://2e233c79df5b2e931fbff94dc5d27be2b182c616"
+            automationName: "XCUITest"  # Default automation for iOS with Appium
+            appiumVersion: "1.20.2"  # Specify Appium version if needed
+
+# Define parallel execution configuration (optional)
+parallel:
+  enabled: true
+  max_threads: 2  # Adjust this number based on your plan and concurrency requirements
+
+# Test execution settings
+test_runner:
+  framework: "appium"  # Specify Appium as the test framework
+  execution_type: "parallel"
+  timeout: 1800  # Test execution timeout (in seconds)
 
 # =======================
 # Parallels per Platform

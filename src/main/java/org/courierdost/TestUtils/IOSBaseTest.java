@@ -22,7 +22,7 @@ public class IOSBaseTest extends AppiumUtils {
 	public Properties propertiesCap;
 
 	@BeforeMethod(alwaysRun = true)
-	@Parameters({"platformVersion", "deviceName"})
+//	@Parameters({"platformVersion", "deviceName"})
 	public void ConfigureAppium(String platformVersion, String deviceName) throws IOException {
 
 		String iOSPlatformVersion = platformVersion;

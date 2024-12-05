@@ -1,0 +1,38 @@
+name: Run ios tests in github runner
+
+on:
+    
+  workflow_dispatch:
+  
+jobs:
+  test:
+    runs-on: macos-latest
+ 
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven        
+          
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: |
+            npm install -g appium@v1.22
+            appium -v
+            appium &>/dev/null &
+
+
+      - name: Build with Maven
+        run: mvn clean test -Dplatform=ios -Dbrowserstack.config.file=browserstack_ios.yml
+
+      - name: Upload Test Report as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: reports/index.html

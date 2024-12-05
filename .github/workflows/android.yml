@@ -29,7 +29,7 @@ jobs:
 
 
       - name: Build with Maven
-        run: mvn clean test -Dplatform=android
+        run: mvn clean test -Dplatform=android -Dbrowserstack.config.file=browserstack_android.yml
 
       - name: Upload Test Report as Artifact
         uses: actions/upload-artifact@v3

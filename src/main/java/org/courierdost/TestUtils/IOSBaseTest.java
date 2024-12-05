@@ -37,7 +37,7 @@ public class IOSBaseTest extends AppiumUtils {
 		options.setCapability("autoAcceptAlerts", true);
 		options.setCapability("autoDismissKeyboard", true);
 		options.setCapability("permissions", permissions);
-		driver = new IOSDriver(new URL("http://127.0.0.1:4723"), options);
+		driver = new IOSDriver(new URL("http://hub.browserstack.com/wd/hub"), options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
 	}

@@ -10,9 +10,4 @@
 			<class name="org.courierdost.android.LoginPageTest" />
 		</classes>
 	</test>
-		<test thread-count="5" name="CD ios group">
-		<classes>
-			<class name="org.courierdost.iOS.LoginTest" />
-		</classes>
-	</test>
 </suite> 

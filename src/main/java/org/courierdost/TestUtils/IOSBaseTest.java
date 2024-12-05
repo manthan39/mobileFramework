@@ -38,11 +38,13 @@ public class IOSBaseTest extends AppiumUtils {
 	//	options.setDeviceName(iOSDeviceNAme);
 	//	options.setApp(System.getProperty("user.dir") + "//src//main//java//org//courierdost//resources//Runner.app");
 
-		options.setPlatformVersion(iOSPlatformVersion);
+	//	options.setPlatformVersion(iOSPlatformVersion);
 		options.setWdaLaunchTimeout(Duration.ofSeconds(20));
 		options.setCapability("autoAcceptAlerts", true);
 		options.setCapability("autoDismissKeyboard", true);
 		options.setCapability("permissions", permissions);
+		options.setCapability("automationName", "XCUITest");  // Correct for iOS
+
 		driver = new IOSDriver(new URL(browserstackUrl), options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 

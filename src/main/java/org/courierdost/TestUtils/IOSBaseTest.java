@@ -28,6 +28,12 @@ public class IOSBaseTest extends AppiumUtils {
 		String iOSDeviceNAme = "iPhone 13 Pro";
 		String permissions = "{\"com.itdcd.vendor\": {\"photos\": \"yes\", \"location\": \"yes\"}}";
 
+		String username = "manthanbhatiya_JpmQqv";
+        	String accessKey = "Yu9uH66YoTCAYrD3AZc1";
+        
+        // BrowserStack URL
+        String browserstackUrl = "https://"+ username + ":" + accessKey + "@hub.browserstack.com/wd/hub";
+
 		XCUITestOptions options = new XCUITestOptions();
 	//	options.setDeviceName(iOSDeviceNAme);
 	//	options.setApp(System.getProperty("user.dir") + "//src//main//java//org//courierdost//resources//Runner.app");
@@ -37,7 +43,7 @@ public class IOSBaseTest extends AppiumUtils {
 		options.setCapability("autoAcceptAlerts", true);
 		options.setCapability("autoDismissKeyboard", true);
 		options.setCapability("permissions", permissions);
-		driver = new IOSDriver(new URL("http://hub.browserstack.com/wd/hub"), options);
+		driver = new IOSDriver(new URL(browserstackUrl), options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
 	}

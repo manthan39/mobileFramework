@@ -22,16 +22,15 @@ public class IOSBaseTest extends AppiumUtils {
 	public Properties propertiesCap;
 
 	@BeforeMethod(alwaysRun = true)
-//	@Parameters({"platformVersion", "deviceName"})
-	public void ConfigureAppium(String platformVersion, String deviceName) throws IOException {
+	public void ConfigureAppium() throws IOException {
 
-		String iOSPlatformVersion = platformVersion;
-		String iOSDeviceNAme = deviceName;
+		String iOSPlatformVersion = "15";
+		String iOSDeviceNAme = "iPhone 13 Pro";
 		String permissions = "{\"com.itdcd.vendor\": {\"photos\": \"yes\", \"location\": \"yes\"}}";
 
 		XCUITestOptions options = new XCUITestOptions();
-		options.setDeviceName(iOSDeviceNAme);
-		options.setApp(System.getProperty("user.dir") + "//src//main//java//org//courierdost//resources//Runner.app");
+	//	options.setDeviceName(iOSDeviceNAme);
+	//	options.setApp(System.getProperty("user.dir") + "//src//main//java//org//courierdost//resources//Runner.app");
 
 		options.setPlatformVersion(iOSPlatformVersion);
 		options.setWdaLaunchTimeout(Duration.ofSeconds(20));
@@ -42,6 +41,8 @@ public class IOSBaseTest extends AppiumUtils {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
 	}
+
+	
 
 	@AfterMethod
 	public void tearDown() {

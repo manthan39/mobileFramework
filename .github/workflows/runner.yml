@@ -1,0 +1,45 @@
+name: runner test
+
+on:
+    
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Install Java 11
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jdk
+          java -version  # Verify the Java version
+
+      - name: Install Maven
+        run: |
+          sudo apt-get install -y maven
+          mvn -version  # Verify Maven version
+
+      - name: Install Node.js and npm
+        run: |
+          sudo apt-get install -y nodejs npm
+          node -v   # Verify Node.js version
+          npm -v    # Verify npm version
+
+      - name: Install Appium 2.0
+        run: |
+          sudo npm install -g appium@next
+          appium --version  # Verify Appium version
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: run tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: mvn clean test -Dplatform=android

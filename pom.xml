@@ -56,12 +56,6 @@
 			<artifactId>selenium-support</artifactId>
 			<version>4.17.0</version>
 		</dependency>
-		<dependency>
-      <groupId>com.browserstack</groupId>
-      <artifactId>browserstack-java-sdk</artifactId>
-      <version>LATEST</version>
-      <scope>compile</scope>
-    </dependency>
 	</dependencies>
 <properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -78,7 +72,7 @@
 				<configuration>
 					<suiteXmlFiles>
 						<suiteXmlFile>testNGSuites/testng_${platform}.xml</suiteXmlFile>
-					</suiteXmlFiles><argLine>-javaagent:"${com.browserstack:browserstack-java-sdk:jar}"</argLine>
+					</suiteXmlFiles>
 				</configuration>
 			</plugin>
 			<plugin>

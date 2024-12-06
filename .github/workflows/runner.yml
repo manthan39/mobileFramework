@@ -27,10 +27,12 @@ jobs:
           node -v   # Verify Node.js version
           npm -v    # Verify npm version
 
-      - name: Install Appium 2.0
+      - name: Install & run Appium 2.0
         run: |
           sudo npm install -g appium@next
           appium --version  # Verify Appium version
+          appium --log-level info &
+          appium &>/dev/null &
 
       - name: Enable KVM
         run: |

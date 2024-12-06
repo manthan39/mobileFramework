@@ -27,7 +27,7 @@ public class AndroidBaseTest extends AppiumUtils{
     //    flutterCapabilities.setCapability( "appium:deviceName", "Pixel 8 Pro API 30" );
         flutterCapabilities.setCapability( "platformName", "Android" );
      
-        flutterCapabilities.setCapability("appium:automationName", "uiAutomator2");
+        flutterCapabilities.setCapability("appium:automationName", "UIAutomator2");
         
         flutterCapabilities.setCapability("autoGrantPermissions", true); // Automatically grant permissions
 

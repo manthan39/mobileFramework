@@ -24,7 +24,7 @@ public class AndroidBaseTest extends AppiumUtils{
 	public void ConfigureAppium() throws IOException
 	{
 		DesiredCapabilities flutterCapabilities = new DesiredCapabilities();
-        flutterCapabilities.setCapability( "appium:deviceName", "Pixel 8 Pro API 30" );
+    //    flutterCapabilities.setCapability( "appium:deviceName", "Pixel 8 Pro API 30" );
         flutterCapabilities.setCapability( "platformName", "Android" );
      
         flutterCapabilities.setCapability("appium:automationName", "uiAutomator2");

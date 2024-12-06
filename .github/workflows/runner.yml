@@ -33,6 +33,8 @@ jobs:
           appium --version  # Verify Appium version
           appium --log-level info &
           appium &>/dev/null &
+          appium driver install uiautomator2
+          appium driver list --installed  # Verify installed drivers
 
       - name: Enable KVM
         run: |

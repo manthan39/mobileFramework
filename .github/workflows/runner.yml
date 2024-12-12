@@ -42,9 +42,6 @@ jobs:
           RELEASE_URL="https://github.com/manthan39/mobileFramework/releases/tag/general/General-Store.apk"
           curl -L -o General-Store.apk $RELEASE_URL  # Download APK
 
-          
-          # List the contents of the extracted folder (optional, for debugging)
-          ls -l ./apk
 
       - name: Enable KVM
         run: |

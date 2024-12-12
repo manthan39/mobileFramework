@@ -39,8 +39,8 @@ jobs:
       - name: Download APK from GitHub Release
         run: |
           # Replace this URL with your actual GitHub release URL
-          RELEASE_URL="https://github.com/manthan39/AppiumFramework/releases/tag/test/app-cd-vendor-debug.apk"
-          curl -L -o app-cd-vendor-debug.apk $RELEASE_URL  # Download APK
+          RELEASE_URL="https://github.com/manthan39/mobileFramework/releases/tag/test/app-cd-vendor-debug.apk.zip"
+          curl -L -o app-cd-vendor-debug.apk.zip $RELEASE_URL  # Download APK
 
       - name: Enable KVM
         run: |

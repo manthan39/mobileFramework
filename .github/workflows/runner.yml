@@ -41,6 +41,11 @@ jobs:
           # Replace this URL with your actual GitHub release URL
           RELEASE_URL="https://github.com/manthan39/mobileFramework/releases/tag/test/app-cd-vendor-debug.apk.zip"
           curl -L -o app-cd-vendor-debug.apk.zip $RELEASE_URL  # Download APK
+          # Unzip the downloaded APK file into a directory
+          unzip app-cd-vendor-debug.apk.zip -d ./apk
+          
+          # List the contents of the extracted folder (optional, for debugging)
+          ls -l ./apk
 
       - name: Enable KVM
         run: |
@@ -57,5 +62,5 @@ jobs:
             adb wait-for-device
             adb shell input keyevent 82
             echo "$(pwd)/app-cd-vendor-debug.apk"
-            adb install -r /home/runner/work/mobileFramework/mobileFramework/app-cd-vendor-debug.apk
+            adb install -r ./apk/app-cd-vendor-debug.apk
             mvn clean test -Dplatform=android

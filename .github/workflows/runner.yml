@@ -57,5 +57,5 @@ jobs:
             adb wait-for-device
             adb shell input keyevent 82
             echo "$(pwd)/app-cd-vendor-debug.apk"
-            adb install -r app-cd-vendor-debug.apk
+            adb install -r /home/runner/work/mobileFramework/mobileFramework/app-cd-vendor-debug.apk
             mvn clean test -Dplatform=android

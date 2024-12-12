@@ -57,9 +57,4 @@ jobs:
             adb wait-for-device
             adb shell input keyevent 82
             adb install -r app-cd-vendor-debug.apk
-
-      - name: run tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: mvn clean test -Dplatform=android
+            mvn clean test -Dplatform=android
